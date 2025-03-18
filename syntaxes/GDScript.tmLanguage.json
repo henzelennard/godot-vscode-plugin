@@ -89,9 +89,19 @@
 			"name": "keyword.language.region.gdscript"
 		},
 		"comment": {
-			"match": "(##|#).*$\\n?",
 			"name": "comment.line.number-sign.gdscript",
-			"captures": { "1": { "name": "punctuation.definition.comment.number-sign.gdscript" } }
+			"begin": "(#+)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.comment.number-sign.gdscript"
+				}
+			},
+			"end": "$\\n?",
+			"patterns": [
+				{ "include": "#notice-keywords" },
+				{ "include": "#warning-keywords" },
+				{ "include": "#critical-keywords" }
+			]
 		},
 		"strings": {
 			"name": "string.quoted.gdscript",
@@ -104,8 +114,23 @@
 					"match": "\\\\."
 				},
 				{ "include": "#string_percent_placeholders" },
-				{ "include": "#string_bracket_placeholders" }
+				{ "include": "#string_bracket_placeholders" },
+				{ "include": "#notice-keywords" },
+				{ "include": "#warning-keywords" },
+				{ "include": "#critical-keywords" }
 			]
+		},
+		"notice-keywords": {
+			"match": "\\b(INFO|NOTE|NOTICE|TEST|TESTING)\\b",
+			"name": "token.info-token"
+		},
+		"warning-keywords": {
+			"match": "\\b(BUG|DEPRECATED|FIXME|HACK|TASK|TBD|TODO|WARNING)\\b",
+			"name": "token.warn-token"
+		},
+		"critical-keywords": {
+			"match": "\\b(ALERT|ATTENTION|CAUTION|CRITICAL|DANGER|SECURITY)\\b",
+			"name": "token.error-token"
 		},
 		"string_percent_placeholders": {
 			"name": "meta.format.percent.gdscript",
